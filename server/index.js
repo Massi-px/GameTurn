@@ -1,25 +1,23 @@
-import mariadb from 'mariadb';
 import express from 'express'
+import getConnection from './database.js'
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import generateRoute from './routes/routes.js'
 
 const app = express();
-export default function getConnection(){
+app.use(express.json());
+getConnection()
 
-    return mariadb.createConnection({
-        host: 'localhost',
-        port: '3306',
-        user: 'gameturn_admin',
-        password: 'gameturn123',
-        database: 'gameturn'
-    });
-}
+/*Création du proxy*/
+app.use("/", createProxyMiddleware( (pathname, req)=>{
+        return !pathname.startsWith('/api')
+    },
+    {target : 'http://127.0.0.1:3000'}
+));
 
-app.get('/mydata', async (req, res) => {
-    const connection = await getConnection();
-    const rows = await connection.query('SELECT * FROM mytable');
-    res.send(rows);
-    await connection.end();
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
 });
 
-app.listen(3001, () => {
-    console.log('Server started on port 3001');
-});
+/*Redirection route*/
+generateRoute(app)
