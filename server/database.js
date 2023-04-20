@@ -1,4 +1,4 @@
-import mariadb from 'mariadb';
+import mariadb from "mariadb";
 
 export default function getConnection(){
 
@@ -9,6 +9,4 @@ export default function getConnection(){
         password: 'gameturn123',
         database: 'gameturn'
     });
-
-
 }

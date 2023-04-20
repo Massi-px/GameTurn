@@ -88,16 +88,18 @@ export default function Login() {
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        <Box component="form" noValidate onSubmit="" sx={{ mt: 1 }}>
+                        <Box component="form" noValidate onSubmit={handleClick} sx={{ mt: 1 }}>
                             <TextField
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
+                                id="username"
+                                label="username"
+                                name="username"
+                                autoComplete="username"
                                 autoFocus
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                             />
                             <TextField
                                 margin="normal"
@@ -108,9 +110,11 @@ export default function Login() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                             />
                             <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
+                                control={<Checkbox value="remember" color ="primary" />}
                                 label="Remember me"
                             />
                             <Button
@@ -130,7 +134,7 @@ export default function Login() {
                                 </Grid>
                                 <Grid item>
                                     <Link href="#" variant="body2">
-                                        {"Don't have an account? Sign Up"}
+                                        {"Don't have an account? Sign Up" }
                                     </Link>
                                 </Grid>
                             </Grid>
