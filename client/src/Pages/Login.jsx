@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import imgTurnament from '../assets/img/tournois-esport.jpg'
 import {
     TextField,
     Button,
@@ -27,7 +28,7 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function Login() {
+export default function Login({ setIsAuthenticated }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -48,6 +49,7 @@ export default function Login() {
                     console.log(data);
                 }
                 else {
+                    localStorage.setItem('token',data.token)
                     window.location.href='/Home'
                 }
             })
@@ -64,7 +66,7 @@ export default function Login() {
                     sm={4}
                     md={7}
                     sx={{
-                        backgroundImage: 'url(https://source.unsplash.com/random)',
+                        backgroundImage: `url(${imgTurnament})`,
                         backgroundRepeat: 'no-repeat',
                         backgroundColor: (t) =>
                             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -122,7 +124,6 @@ export default function Login() {
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
-                                onClick={handleClick}
                             >
                                 Sign In
                             </Button>
