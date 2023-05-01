@@ -1,7 +1,11 @@
 import {Route, Navigate } from 'react-router-dom';
-export default function PrivateRoute({ component: Component, ...rest }) {
+import React from "react";
+
+function PrivateRoute (Path, Element) {
     const isLoggedIn = localStorage.getItem('token');
     return (
-        <Route {...rest} render={(props) => isLoggedIn ? (<Component {...props} />) : (<Navigate to={ {pathname: '/'} } />)}/>
+        <Route path={Path} element={isLoggedIn ? Element : <Navigate to="/" />}/>
     );
 }
+
+export default PrivateRoute;

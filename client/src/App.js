@@ -1,17 +1,17 @@
 import React  from 'react';
 import './App.css';
-import {Route, Routes, BrowserRouter, Navigate} from "react-router-dom";
+import {Route, Routes, BrowserRouter} from "react-router-dom";
 import Login from './Pages/Login'
 import Home from "./Pages/Home";
+import PrivateRoute from "./components/PrivateRoute";
 
 export default function App() {
-    const isAuthenticated = localStorage.getItem('token');
 
     return (
         <BrowserRouter>
             <Routes>
                 <Route exact path="/" element={<Login/>} />
-                <Route exact path="/Home" element={isAuthenticated ? <Home /> : <Navigate to="/" />} />
+                {PrivateRoute('/Home', <Home/>)}
             </Routes>
         </BrowserRouter>
     );
