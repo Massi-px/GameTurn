@@ -12,10 +12,11 @@ import {
     FormControlLabel,
     Checkbox, Typography, createTheme, Paper
 } from '@mui/material';
+import "../App.css"
 
 function Copyright(props: any) {
     return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+        <Typography variant="body2" color="#FFFF" align="center" {...props}>
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
                 Your Website
@@ -58,7 +59,7 @@ export default function Login({ setIsAuthenticated }) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Grid container component="main" sx={{ height: '100vh' }}>
+            <Grid container component="main" sx={{ height: '100vh', color:'#FFFF'}}>
                 <CssBaseline />
                 <Grid
                     item
@@ -74,7 +75,7 @@ export default function Login({ setIsAuthenticated }) {
                         backgroundPosition: 'center',
                     }}
                 />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{bgcolor: '#050517', color:'#FFFF'}}>
                     <Box
                         sx={{
                             my: 8,
@@ -82,26 +83,34 @@ export default function Login({ setIsAuthenticated }) {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
+                            padding: '10px',
+                            bgcolor: '#7E858B',
+                            borderRadius:'15px',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <Avatar sx={{ m: 1, bgcolor: '#CF5C36' }}>
 
                         </Avatar>
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        <Box component="form" noValidate onSubmit={handleClick} sx={{ mt: 1 }}>
+                        <Box component="form" noValidate onSubmit={handleClick} sx={{ mt: 1}}>
                             <TextField
                                 margin="normal"
                                 required
                                 fullWidth
                                 id="username"
-                                label="username"
+                                label="Username"
                                 name="username"
                                 autoComplete="username"
                                 autoFocus
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
+                                onKeyPress={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleClick();
+                                    }
+                                }}
                             />
                             <TextField
                                 margin="normal"
@@ -114,6 +123,11 @@ export default function Login({ setIsAuthenticated }) {
                                 autoComplete="current-password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                onKeyPress={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleClick();
+                                    }
+                                }}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color ="primary" />}
@@ -123,13 +137,13 @@ export default function Login({ setIsAuthenticated }) {
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
+                                sx={{ mt: 3, mb: 2, bgcolor: '#CF5C36' }}
                             >
                                 Sign In
                             </Button>
                             <Grid container>
-                                <Grid item xs>
-                                    <Link href="#" variant="body2">
+                                <Grid item xs sx={{color: '#CF5C36'}}>
+                                    <Link href="#" variant="body2" >
                                         Forgot password?
                                     </Link>
                                 </Grid>

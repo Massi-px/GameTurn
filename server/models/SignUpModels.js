@@ -1,20 +1,27 @@
-import getConnection from '../database.js';
+import getConnection  from '../database.js';
 
-export default async function LoginModels(username, password) {
+export async function checkUsernameExists(username) {
+    const conn = await getConnection();
+    const result = await conn.query(`SELECT * FROM users WHERE username = '${username}'`);
+    return result.length > 0;
+}
+
+export async function createUser(username, surname, firstname, email, password) {
     const conn = await getConnection();
     const result = await conn.query(
-        'SELECT * FROM users WHERE username = ? AND password = ?',
-        [username, password]
+        `INSERT INTO users (username, surname, first_name, email, password)
+     VALUES ('${username}', '${surname}', '${firstname}', '${email}', '${password}')`
     );
-    if (result.length > 0) {
-        const user = result[0];
+    if (result.affectedRows > 0) {
         return {
-            id: user.id,
-            username: user.username,
-            email: user.email,
+            id: result.insertId,
+            username,
+            surname,
+            firstname,
+            email,
             // d'autres informations de l'utilisateur que vous souhaitez renvoyer
         };
     } else {
-        return null;
+        throw new Error('Erreur lors de l\'insertion de l\'utilisateur');
     }
 }
