@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import getConnection  from '../database.js';
 
 export async function checkUsernameExists(username) {
@@ -6,17 +7,21 @@ export async function checkUsernameExists(username) {
     return result.length > 0;
 }
 
-export async function createUser(username, surname, firstname, email, password) {
+export async function createUser(username, lastname, firstname, email, password) {
     const conn = await getConnection();
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const result = await conn.query(
-        `INSERT INTO users (username, surname, first_name, email, password)
-     VALUES ('${username}', '${surname}', '${firstname}', '${email}', '${password}')`
+        `INSERT INTO users (username, lastname, firstname, email, password)
+     VALUES ('${username}', '${lastname}', '${firstname}', '${email}', '${hashedPassword}')`
     );
     if (result.affectedRows > 0) {
+
         return {
-            id: result.insertId,
+            id: userId,
             username,
-            surname,
+            lastname,
             firstname,
             email,
             // d'autres informations de l'utilisateur que vous souhaitez renvoyer

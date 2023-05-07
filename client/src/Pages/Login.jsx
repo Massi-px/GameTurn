@@ -45,13 +45,12 @@ export default function Login({ setIsAuthenticated }) {
             })
         })
             .then(response => response.json())
-            .then(data => {
+            .then(async data => {
                 if (data.status === "error") {
                     console.log(data);
-                }
-                else {
-                    localStorage.setItem('token',data.token)
-                    window.location.href='/Home'
+                } else {
+                    await localStorage.setItem('token', data.token)
+                    window.location.href = '/Home'
                 }
             })
             .catch(error => console.error(error));
