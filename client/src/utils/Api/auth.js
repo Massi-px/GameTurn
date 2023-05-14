@@ -25,7 +25,7 @@
             })
                 .then((response) => response.json())
                 .then(async (data) => {
-                    console.log(data.token)
+                    await console.log(data.token)
                     await localStorage.setItem("token", data.token);
                     if (data.status === "error") {
                         console.log(data);

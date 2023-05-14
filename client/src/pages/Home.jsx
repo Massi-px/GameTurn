@@ -17,6 +17,8 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import {Navigate} from "react-router-dom";
+import {TextField} from "@mui/material";
 
 
 function Copyright(props) {
@@ -80,16 +82,26 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const mdTheme = createTheme();
 
+function isLoggedIn() {
+    return !!localStorage.getItem('token');
+}
+
 export default function Home() {
     const [open, setOpen] = React.useState(true);
+
+    if (!isLoggedIn()) {
+        return <Navigate to="/" />;
+    }
+
+
     const toggleDrawer = () => {
         setOpen(!open);
     };
 
     return (
         <ThemeProvider theme={mdTheme}>
-            <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
+            <Box sx={{display: 'flex'}}>
+                <CssBaseline/>
                 <AppBar position="absolute" open={open}>
                     <Toolbar
                         sx={{
@@ -103,23 +115,23 @@ export default function Home() {
                             onClick={toggleDrawer}
                             sx={{
                                 marginRight: '36px',
-                                ...(open && { display: 'none' }),
+                                ...(open && {display: 'none'}),
                             }}
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
                         <Typography
                             component="h1"
                             variant="h6"
                             color="inherit"
                             noWrap
-                            sx={{ flexGrow: 1 }}
+                            sx={{flexGrow: 1}}
                         >
                             Dashboard
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
+                                <NotificationsIcon/>
                             </Badge>
                         </IconButton>
                     </Toolbar>
@@ -134,13 +146,13 @@ export default function Home() {
                         }}
                     >
                         <IconButton onClick={toggleDrawer}>
-                            <ChevronLeftIcon />
+                            <ChevronLeftIcon/>
                         </IconButton>
                     </Toolbar>
-                    <Divider />
+                    <Divider/>
                     <List component="nav">
                         test
-                        <Divider sx={{ my: 1 }} />
+                        <Divider sx={{my: 1}}/>
                         test
                     </List>
                 </Drawer>
@@ -156,8 +168,8 @@ export default function Home() {
                         overflow: 'auto',
                     }}
                 >
-                    <Toolbar />
-                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+                    <Toolbar/>
+                    <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
                         <Grid container spacing={3}>
                             {/* Chart */}
                             <Grid item xs={12} md={8} lg={9}>
@@ -187,12 +199,12 @@ export default function Home() {
                             </Grid>
                             {/* Recent Orders */}
                             <Grid item xs={12}>
-                                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                                <Paper sx={{p: 2, display: 'flex', flexDirection: 'column'}}>
 
                                 </Paper>
                             </Grid>
                         </Grid>
-                        <Copyright sx={{ pt: 4 }} />
+                        <Copyright sx={{pt: 4}}/>
                     </Container>
                 </Box>
             </Box>

@@ -84,6 +84,9 @@ export default function Login({ setIsAuthenticated }) {
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
+                        <Typography>
+                            {localStorage.getItem('token')}
+                        </Typography>
                         <Box component="form" noValidate onSubmit={handleClick} sx={{ mt: 1}}>
                             <TextField
                                 margin="normal"
