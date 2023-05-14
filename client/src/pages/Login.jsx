@@ -13,6 +13,7 @@ import {
     Checkbox, Typography, createTheme, Paper
 } from '@mui/material';
 import "../App.css"
+import authManagerInstance from "../utils/Api/auth.js";
 
 function Copyright(props: any) {
     return (
@@ -33,29 +34,18 @@ export default function Login({ setIsAuthenticated }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleClick = () => {
-        fetch('http://localhost:8080/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username,
-                password
+    const handleClick = async () => {
+        authManagerInstance.login(username, password)
+            .then(message => {
+                console.log(message);
+                window.location.href="/home";
             })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "error") {
-                    console.log(data);
-                }
-                else {
-                    localStorage.setItem('token',data.token)
-                    window.location.href='/Home'
-                }
+            .catch(error =>{
+                console.error(error);
+                window.location.href="/";
             })
-            .catch(error => console.error(error));
     };
+
 
     return (
         <ThemeProvider theme={theme}>
