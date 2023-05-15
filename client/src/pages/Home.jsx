@@ -18,7 +18,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import {Navigate} from "react-router-dom";
-import {TextField} from "@mui/material";
 
 
 function Copyright(props) {
@@ -64,7 +63,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.enteringScreen,
             }),
+            backgroundColor: '#050517',
             boxSizing: 'border-box',
+            color: '#FFFFFF',
             ...(!open && {
                 overflowX: 'hidden',
                 transition: theme.transitions.create('width', {
@@ -106,6 +107,7 @@ export default function Home() {
                     <Toolbar
                         sx={{
                             pr: '24px', // keep right padding when drawer closed
+                            bgcolor :'#1F1F1F'
                         }}
                     >
                         <IconButton
@@ -118,7 +120,7 @@ export default function Home() {
                                 ...(open && {display: 'none'}),
                             }}
                         >
-                            <MenuIcon/>
+                            <MenuIcon sx={{color: '#FFFFFF'}}/>
                         </IconButton>
                         <Typography
                             component="h1"
@@ -127,7 +129,7 @@ export default function Home() {
                             noWrap
                             sx={{flexGrow: 1}}
                         >
-                            Dashboard
+                            Game Turn
                         </Typography>
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
@@ -146,7 +148,7 @@ export default function Home() {
                         }}
                     >
                         <IconButton onClick={toggleDrawer}>
-                            <ChevronLeftIcon/>
+                            <ChevronLeftIcon sx={{color: '#FFFFFF'}}/>
                         </IconButton>
                     </Toolbar>
                     <Divider/>

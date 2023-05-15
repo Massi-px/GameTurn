@@ -9,7 +9,6 @@
             }
             return AuthManager.#instance;
         }
-
         /*Méthode de login*/
 
         async login(username, password) {

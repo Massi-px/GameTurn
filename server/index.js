@@ -2,9 +2,10 @@ import express from 'express'
 import getConnection from './database.js'
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import generateRoute from './routes/routes.js'
-
+import passport from 'passport';
 const app = express();
 app.use(express.json());
+app.use(passport.initialize());
 getConnection()
 
 /*Création du proxy*/
