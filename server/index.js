@@ -12,7 +12,7 @@ getConnection()
 app.use("/", createProxyMiddleware( (pathname, req)=>{
         return !pathname.startsWith('/api')
     },
-    {target : 'http://127.0.0.1:3000'}
+    {target : 'http://localhost:5173'}
 ));
 
 const PORT = process.env.PORT || 8080;

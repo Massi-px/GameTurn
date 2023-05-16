@@ -7,7 +7,7 @@ export async function checkUsernameExists(username) {
     return result.length > 0;
 }
 
-export async function createUser(googleId, username, name, email, password) {
+export async function createUser(googleId, username, name, email) {
     const conn = await getConnection();
 
     // Vérifier si l'utilisateur existe déjà dans la base de données
@@ -17,11 +17,9 @@ export async function createUser(googleId, username, name, email, password) {
         throw new Error('Nom d\'utilisateur déjà utilisé');
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const result = await conn.query(
-        `INSERT INTO users (googleId, username, name, email, password)
-     VALUES ('${googleId}','${username}', '${name}', '${email}', '${hashedPassword}')`
+        `INSERT INTO users (googleId, username, name, email)
+     VALUES ('${googleId}','${username}', '${name}', '${email}')`
     );
 
     const userId = result.affectedRows > 0 ? result.insertId : null;

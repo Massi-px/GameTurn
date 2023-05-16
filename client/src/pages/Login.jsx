@@ -13,9 +13,9 @@ import {
     Checkbox, Typography, createTheme, Paper
 } from '@mui/material';
 import "../App.css"
-import authManagerInstance from "../utils/Api/auth.js";
+import authManagerInstance from "../utils/api/auth.js";
 
-function Copyright(props: any) {
+function Copyright(props) {
     return (
         <Typography variant="body2" color="#FFFF" align="center" {...props}>
             {'Copyright © '}
@@ -28,7 +28,15 @@ function Copyright(props: any) {
     );
 }
 
-const theme = createTheme();
+const theme = createTheme({
+    overrides: {
+        MuiTextField: { // Name of the component ⚛️ / style sheet
+            root: { // Name of the rule
+                color: "orange",
+            }
+        }
+    }
+});
 
 export default function Login({ setIsAuthenticated }) {
     const [username, setUsername] = useState('');
@@ -38,14 +46,13 @@ export default function Login({ setIsAuthenticated }) {
         authManagerInstance.login(username, password)
             .then(message => {
                 console.log(message);
-                window.location.href="/home";
+                window.location.href = "/Home";
             })
-            .catch(error =>{
+            .catch(error => {
                 console.error(error);
-                window.location.href="/";
+                window.location.href = "/";
             })
     };
-
 
     return (
         <ThemeProvider theme={theme}>
@@ -84,10 +91,7 @@ export default function Login({ setIsAuthenticated }) {
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        <Typography>
-                            {localStorage.getItem('token')}
-                        </Typography>
-                        <Box component="form" noValidate onSubmit={handleClick} sx={{ mt: 1}}>
+                        <Box component="div" sx={{ mt: 1}}>
                             <TextField
                                 margin="normal"
                                 required
@@ -99,11 +103,6 @@ export default function Login({ setIsAuthenticated }) {
                                 autoFocus
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
-                                onKeyPress={(e) => {
-                                    if (e.key === 'Enter') {
-                                        handleClick();
-                                    }
-                                }}
                             />
                             <TextField
                                 margin="normal"
@@ -116,21 +115,16 @@ export default function Login({ setIsAuthenticated }) {
                                 autoComplete="current-password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                onKeyPress={(e) => {
-                                    if (e.key === 'Enter') {
-                                        handleClick();
-                                    }
-                                }}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color ="primary" />}
                                 label="Remember me"
                             />
                             <Button
-                                type="submit"
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2, bgcolor: '#CF5C36' }}
+                                onClick={handleClick}
                             >
                                 Sign In
                             </Button>

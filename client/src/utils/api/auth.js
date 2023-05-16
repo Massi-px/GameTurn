@@ -24,7 +24,6 @@
             })
                 .then((response) => response.json())
                 .then(async (data) => {
-                    await console.log(data.token)
                     await localStorage.setItem("token", data.token);
                     if (data.status === "error") {
                         console.log(data);
@@ -43,7 +42,7 @@
         /*Vérification si l'utilisateur est login en vérifiant
         si un token est bien enregistré localement*/
         isAuthenticated() {
-            return localStorage.getItem('token') !== null;
+            return localStorage.getItem('token');
         }
 
     }
