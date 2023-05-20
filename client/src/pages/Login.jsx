@@ -10,7 +10,7 @@ import {
     CssBaseline,
     Avatar,
     FormControlLabel,
-    Checkbox, Typography, createTheme, Paper
+    Checkbox, Typography, Paper, useTheme
 } from '@mui/material';
 import "../App.css"
 import authManagerInstance from "../utils/api/auth.js";
@@ -28,30 +28,20 @@ function Copyright(props) {
     );
 }
 
-const theme = createTheme({
-    overrides: {
-        MuiTextField: { // Name of the component ⚛️ / style sheet
-            root: { // Name of the rule
-                color: "orange",
-            }
-        }
-    }
-});
-
 export default function Login({ setIsAuthenticated }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const theme = useTheme();
     const handleClick = async () => {
-        authManagerInstance.login(username, password)
-            .then(message => {
-                console.log(message);
-                window.location.href = "/Home";
-            })
-            .catch(error => {
-                console.error(error);
-                window.location.href = "/";
-            })
+        try {
+            await authManagerInstance.login(username, password);
+            window.location.href = "/Home";
+        }
+        catch (error) {
+            console.error(error);
+            window.location.href = "/";
+        }
     };
 
     return (

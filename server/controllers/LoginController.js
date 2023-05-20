@@ -6,15 +6,16 @@ const EXPIRATION_TIME = '1h'; // Durée de validité du token
 export default async function LoginController(req, res) {
     const { username, password } = req.body;
     const user = await LoginModels(username, password);
-    console.log(user)
     if (user) {
         const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: EXPIRATION_TIME }); // Génération du token en utilisant l'ID de l'utilisateur
-        res.cookie(name, token, {
-            expires: 31536000,
-            secure: false,
-            httpOnly: true,
+        console.log(req.cookies)
+        res.cookie('Authentication', token, {
+            //expire: 3600 + Date.now(),
+            SameSite: 'none',
+            secure: true
         })
-        console.log(token);
+        console.log(req.get('Origin'))
+        console.log(user)
         res.send({ user });
     } else {
         res.status(401)

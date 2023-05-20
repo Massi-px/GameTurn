@@ -1,24 +1,20 @@
 import React from 'react';
-import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
-import Home from '../pages/Home';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Login from '../pages/Login';
-import authManagerInstance from '../utils/api/auth.js';
 import SignUp from "../pages/SignUp";
+import Home from "../pages/Home";
+import CreateTournament from "../pages/CreateTournament";
 
-const PrivateRoute = (path,element) => {
-    return (
-        <Route path={path} element={authManagerInstance.isAuthenticated() ? element : <Navigate to ='/'/>}/>
-    );
-};
 
 const AppRouter = () => {
     return (
         <BrowserRouter>
-                <Routes>
-                    <Route exact path="/" element={<Login/>} />
-                    <Route exact path="/SignUp" element={<SignUp/>} />
-                    {PrivateRoute ("/Home", <Home/>)}
-                </Routes>
+            <Routes>
+                <Route exact path="/" element={<Login />} />
+                <Route exact path="/SignUp" element={<SignUp />} />
+                <Route exact path="/Home" element={<Home />} />
+                <Route exact path="/Create-Tournament" element={<CreateTournament />} />
+            </Routes>
         </BrowserRouter>
     );
 };

@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useState} from "react";
+import { styled } from '@mui/system';
 import  "../assets/css/SignUp.css";
 
 function Copyright(props) {

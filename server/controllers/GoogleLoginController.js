@@ -12,8 +12,7 @@ export default async function GoogleLoginController(req, res) {
 
     if (user) {
         const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: EXPIRATION_TIME }); // Génération du token en utilisant l'ID de l'utilisateur
-        res.send({ user, token });
-        console.log(token);
+        res.send({ user});
     } else {
         res.status(401);
         res.send({ status: "error", message: 'Wrong username or password.' });
