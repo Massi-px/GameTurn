@@ -45,8 +45,21 @@ import Cookie from 'js-cookie';
         /*Vérification si l'utilisateur est login en vérifiant
         si un token est bien enregistré localement*/
         isAuthenticated() {
-            return Cookie.get('token');
+            const authenticationCookie = Cookie.get('Authentication');
+            return !!authenticationCookie; // Convertir la valeur en booléen
         }
+
+        /*Méthode pour se déconnecter*/
+        logout() {
+            if (this.isAuthenticated()) {
+                Cookie.remove('Authentication');
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
     }
         /*Instance de ma classe à exporter pour l'utiliser partout*/
     const authManagerInstance = new AuthManager();

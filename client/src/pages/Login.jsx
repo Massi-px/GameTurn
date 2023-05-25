@@ -36,7 +36,7 @@ export default function Login({ setIsAuthenticated }) {
     const handleClick = async () => {
         try {
             await authManagerInstance.login(username, password);
-            window.location.href = "/Home";
+            window.location.href = "/home";
         }
         catch (error) {
             console.error(error);
@@ -125,7 +125,7 @@ export default function Login({ setIsAuthenticated }) {
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link href="/SignUp" variant="body2">
+                                    <Link href="/sign-up" variant="body2">
                                         {"Don't have an account? Sign Up" }
                                     </Link>
                                 </Grid>

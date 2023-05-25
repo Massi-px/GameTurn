@@ -67,7 +67,7 @@ export default function CreateTournament() {
                         inputProps={{ style: { color: '#FFF' } }}
                     >
                         {gameOptions.map((option) => (
-                            <MenuItem key={option} value={option} sx={{ color: '#FFF' }}>
+                            <MenuItem key={option} value={option} sx={{ color: '#000' }}>
                                 {option}
                             </MenuItem>
                         ))}
@@ -97,6 +97,7 @@ export default function CreateTournament() {
                     label="Nombre de participants"
                     name="nmbrParticipants"
                     autoComplete="nmbrParticipants"
+                    sx={{color:'#FFF'}}
                     InputLabelProps={{
                         style: { color: '#FFF' },
                     }}
@@ -115,7 +116,7 @@ export default function CreateTournament() {
                                     required
                                     InputProps={{
                                         ...inputProps,
-                                        style: { color: '#FFF', paddingRight: 0 },
+                                        style: {paddingRight: 0 },
                                     }}
                                 />
                             )}
@@ -130,7 +131,7 @@ export default function CreateTournament() {
                                     required
                                     InputProps={{
                                         ...inputProps,
-                                        style: { color: '#FFF', paddingRight: 0 },
+                                        style: {paddingRight: 0 },
                                     }}
                                 />
                             )}
