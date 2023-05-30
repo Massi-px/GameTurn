@@ -20,12 +20,42 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 const gameOptions = ['FPS', 'Stratégie', 'Combat', 'Autre'];
 
 export default function CreateTournament() {
+    const [name, setName] = useState('');
     const [selectedGame, setSelectedGame] = useState('');
+    const [nmbrParticipants, setNmbrParticipants] = useState('');
     const [startDateTournament, setStartDateTournament] = useState(dayjs(new Date()));
+    const [endDateTournament, setEndDateTournament] = useState(dayjs(new Date()));
 
     const handleGameChange = (event) => {
         setSelectedGame(event.target.value);
     };
+
+    const handleCreateTournament = async () => {
+        try {
+            const response = await fetch('http://localhost:8080/api/create-tournament', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Assurez-vous d'inclure le cookie contenant le token JWT dans l'en-tête
+                },
+                credentials:'include',
+                body: JSON.stringify({
+                    name,
+                    start_date: startDateTournament.format('YYYY-MM-DD'),
+                    end_date: endDateTournament.format('YYYY-MM-DD'),
+                    nmbrParticipants,
+                    game: selectedGame
+                }),
+            });
+
+            const data = await response.json(); // Attendre la résolution de response.json() et obtenir les données
+
+            console.log(data);
+            console.log('Tournoi créé avec succès !');
+        } catch (error) {
+            console.log('Erreur lors de la requête de création du tournoi :', error);
+        }
+    }
 
     return (
         <Box
@@ -55,6 +85,8 @@ export default function CreateTournament() {
                     InputLabelProps={{
                         style: { color: '#FFF' },
                     }}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                 />
 
                 <FormControl fullWidth margin="normal" required>
@@ -101,6 +133,8 @@ export default function CreateTournament() {
                     InputLabelProps={{
                         style: { color: '#FFF' },
                     }}
+                    value={nmbrParticipants}
+                    onChange={(e) => setNmbrParticipants(e.target.value)}
                 />
 
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -133,6 +167,8 @@ export default function CreateTournament() {
                                         ...inputProps,
                                         style: {paddingRight: 0 },
                                     }}
+                                    value={endDateTournament}
+                                    onChange={(newValue) => setEndDateTournament(newValue)}
                                 />
                             )}
                         />
@@ -141,7 +177,7 @@ export default function CreateTournament() {
 
                 <Grid container spacing={2} sx={{ marginTop: '20px' }}>
                     <Grid item xs={6}>
-                        <Button fullWidth variant="contained" color="primary">
+                        <Button fullWidth variant="contained" color="primary" onClick={handleCreateTournament}>
                             Créer le tournoi
                         </Button>
                     </Grid>
@@ -153,5 +189,5 @@ export default function CreateTournament() {
                 </Grid>
             </Container>
         </Box>
-    );
+    )
 }

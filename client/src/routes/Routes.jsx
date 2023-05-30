@@ -18,6 +18,10 @@ import ListItemText from "@mui/material/ListItemText";
 import {Link} from "@mui/material";
 import authManagerInstance from "../utils/api/auth";
 import LogoutIcon from '@mui/icons-material/Logout';
+import ListTournament from "../pages/ListTournament";
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import Tournament from "../pages/Tournament";
+
 
 const drawerWidth = 240;
 function handleLogout() {
@@ -67,6 +71,15 @@ const HomeRoutes = () => {
                         </ListItemButton>
                     </ListItem>
 
+                    <ListItem key='listTournament' >
+                        <ListItemButton component={Link} to="/home/list-tournament">
+                            <ListItemIcon>
+                                <FormatListBulletedIcon />
+                            </ListItemIcon>
+                            <ListItemText primary='Liste des tournois' />
+                        </ListItemButton>
+                    </ListItem>
+
                     <ListItem key='logout' >
                         <ListItemButton onClick={handleLogout}>
                             <ListItemIcon>
@@ -82,6 +95,8 @@ const HomeRoutes = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/create-tournament" element={<CreateTournament />} />
+                <Route path="/list-tournament" element={<ListTournament />} />
+                <Route path="tournament/:tournamentId" element={<Tournament />} />
             </Routes>
         </>
     );
