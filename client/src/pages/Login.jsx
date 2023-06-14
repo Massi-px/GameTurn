@@ -13,7 +13,7 @@ import {
     Checkbox, Typography, Paper, useTheme
 } from '@mui/material';
 import "../App.css"
-import authManagerInstance from "../utils/api/auth.js";
+import apiInstance from "../utils/api/apiService";
 
 function Copyright(props) {
     return (
@@ -31,17 +31,13 @@ function Copyright(props) {
 export default function Login({ setIsAuthenticated }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [remember, setRemember] = useState(false);
 
     const theme = useTheme();
+
     const handleClick = async () => {
-        try {
-            await authManagerInstance.login(username, password);
-            window.location.href = "/home";
-        }
-        catch (error) {
-            console.error(error);
-            window.location.href = "/";
-        }
+            await apiInstance.exec('login','POST',{username,password,remember})
+            window.location.href="/home";
     };
 
     return (
@@ -71,7 +67,7 @@ export default function Login({ setIsAuthenticated }) {
                             flexDirection: 'column',
                             alignItems: 'center',
                             padding: '10px',
-                            bgcolor: '#7E858B',
+                                bgcolor: '#BEB7A4',
                             borderRadius:'15px',
                         }}
                     >
@@ -81,7 +77,7 @@ export default function Login({ setIsAuthenticated }) {
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        <Box component="div" sx={{ mt: 1}}>
+                        <Box component="div" sx={{ mt: 1, }}>
                             <TextField
                                 margin="normal"
                                 required
@@ -93,6 +89,7 @@ export default function Login({ setIsAuthenticated }) {
                                 autoFocus
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
+
                             />
                             <TextField
                                 margin="normal"
@@ -107,7 +104,7 @@ export default function Login({ setIsAuthenticated }) {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <FormControlLabel
-                                control={<Checkbox value="remember" color ="primary" />}
+                                control={<Checkbox value={remember} onChange={(e) => setRemember(e.target.value)} color ="primary" />}
                                 label="Remember me"
                             />
                             <Button

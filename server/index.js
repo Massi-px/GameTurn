@@ -1,23 +1,44 @@
 import express from 'express'
 import getConnection from './database.js'
-import { createProxyMiddleware } from 'http-proxy-middleware';
 import generateRoute from './routes/routes.js'
-import passport from 'passport';
+import userModel from './models/class/UserModel.js'
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 const app = express();
 app.use(express.json());
-app.use(passport.initialize());
+app.use(cookieParser());
 getConnection()
 
-app.use('/api', (req, res, next) => {
-    const origin = req.headers.origin;
-    res.set({
-        "Access-Control-Allow-Origin": origin,
-        "Access-Control-Allow-Credentials": true,
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE",
-        "Access-Control-Allow-Headers": "Content-Type, *",
-    })
-    next();
+app.use('/api', cors({
+
+    origin(origin, callback) {
+        callback(null, true)
+    },
+    credentials: true
+}))
+
+
+app.use('/api', async (req, res, next) => {
+
+    if (req.path === '/login' || req.path === '/signup'){
+        next()
+        return
+    }
+
+    const token = req.cookies?.Authentication
+
+    if(token){
+        const UserModel = new userModel();
+        const users = await UserModel.getBy({token})
+        req.user = users[0]
+        if (req.user && req.user.isActive) {
+            next();
+            return;
+        }
+    }
+    // si pas user ou pas token
+    res.status(401).json('Vous devez être connecté !')
 });
 
 /*Création du proxy*/

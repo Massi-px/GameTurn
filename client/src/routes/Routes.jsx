@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import Login from '../pages/Login';
 import SignUp from "../pages/SignUp";
 import Home from "../pages/Home";
@@ -21,6 +21,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ListTournament from "../pages/ListTournament";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import Tournament from "../pages/Tournament";
+import apiInstance from "../utils/api/apiService";
 
 
 const drawerWidth = 240;
@@ -37,7 +38,7 @@ const HomeRoutes = () => {
         <>
             <AppBar
                 position="fixed"
-                sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`, bgcolor: '#0A192F' }}
+                sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`, bgcolor: '#BEB7A' }}
             >
                 <Toolbar>
                     <Typography variant="h6" noWrap component="div">
@@ -104,8 +105,7 @@ const HomeRoutes = () => {
 
 
 const AppRouter = () => {
-    return authManagerInstance.isAuthenticated() ?
-        (
+    return(
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login />} />
@@ -113,14 +113,20 @@ const AppRouter = () => {
                 <Route path="/home/*" element={<HomeRoutes />} />
             </Routes>
         </BrowserRouter>
-    ):
-        (
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                </Routes>
-            </BrowserRouter>
         )
 };
+/*
+const AppRouter = () => {
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/sign-up" element={<SignUp />} />
+                <Route path="/home/*" element={<HomeRoutes />} />
+            </Routes>
+        </BrowserRouter>
+    );
+};
+*/
 
 export default AppRouter;

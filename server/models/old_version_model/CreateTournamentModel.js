@@ -1,10 +1,10 @@
 import getConnection from '../database.js';
 
-export default async function CreateTournamentModel(name, start_date, end_date, nmbrParticipants, game) {
+export default async function CreateTournamentModel(name, start_date, end_date, maxNmbrParticipants, game) {
     const conn = await getConnection();
     const result = await conn.query(
-        `INSERT INTO tournament (name, start_date, end_date, nmbrParticipants, game)
-    VALUES ('${name}', '${start_date}', '${end_date}', '${nmbrParticipants}', '${game}')`
+        `INSERT INTO tournament (name, start_date, end_date, maxNmbrParticipants, game)
+    VALUES ('${name}', '${start_date}', '${end_date}', '${maxNmbrParticipants}', '${game}')`
     );
     const tournamentId = result.affectedRows > 0 ? result.insertId : null;
 
@@ -14,7 +14,7 @@ export default async function CreateTournamentModel(name, start_date, end_date, 
             name,
             start_date,
             end_date,
-            nmbrParticipants,
+            maxNmbrParticipants,
             game
             // d'autres informations de l'utilisateur que vous souhaitez renvoyer
         }

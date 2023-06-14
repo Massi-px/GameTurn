@@ -1,31 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import {Box, Button, Typography} from '@mui/material';
+import authManagerInstance from "../utils/api/auth";
+import apiInstance from "../utils/api/apiService";
 
 export default function Tournament() {
     const [selectedTournament, setSelectedTournament] = useState(null);
-    const tournamentId = useParams();
+    const {tournamentId} = useParams();
+    const userId = authManagerInstance.getUserId()
 
     const fetchSelectTournaments = async () => {
-        try {
-            const response = await fetch('http://localhost:8080/api/select-tournament', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include',
-                body: JSON.stringify(tournamentId),
-            });
-            const data = await response.json();
-            setSelectedTournament(data);
-        } catch (error) {
-            console.error('Erreur lors de la récupération des tournois :', error);
-        }
-    };
-
+        let tournament = await apiInstance.exec(`tournaments/${tournamentId}`, 'GET')
+        setSelectedTournament(tournament);
+    }
     useEffect(() => {
         fetchSelectTournaments();
     }, []);
+
+    const handleClick = async () => {
+         await apiInstance.exec(
+            'tournaments/join',
+            'POST',
+            {tournamentId})
+    }
 
     return (
         <Box
@@ -47,7 +44,7 @@ export default function Tournament() {
                         Tournament Details
                     </Typography>
                     <Typography variant="body1" component="p">
-                        Tournament ID: {selectedTournament.tournament_id}
+                        Tournament ID: {selectedTournament.id}
                     </Typography>
                     <Typography variant="body1" component="p">
                         Name: {selectedTournament.name}
@@ -64,6 +61,11 @@ export default function Tournament() {
                     <Typography variant="body1" component="p">
                         Game: {selectedTournament.game}
                     </Typography>
+
+                    <Typography> Username = {userId}</Typography>
+
+                    <Button onClick = {handleClick}> Join Tournament </Button>
+
                 </Box>
             )}
         </Box>

@@ -1,11 +1,9 @@
-import Cookie from 'js-cookie';
 
-    class AuthManager {
+class AuthManager {
 
         /*Singleton de ma classe*/
 
         static #instance = null;
-
         static getInstance() {
             if (!AuthManager.#instance) {
                 AuthManager.#instance = new AuthManager();
@@ -15,8 +13,9 @@ import Cookie from 'js-cookie';
 
         /*Méthode de login*/
 
-        async login(username, password) {
-            return fetch("http://localhost:8080/api/login", {
+        async login(username, password, remember) {
+            try{
+            const res = await fetch("http://localhost:8080/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -25,40 +24,43 @@ import Cookie from 'js-cookie';
                 body: JSON.stringify({
                     username,
                     password,
+                    remember
                 }),
             })
-                .then((response) => response.json())
-                .then(async (data) => {
-                    if (data.status === "error") {
-                        console.log(data);
-                        throw new Error("Authentication failed"); // renvoyer une erreur pour rejeter la promesse
-                    } else {
-                        return "Authentication successful"; // renvoyer la chaîne de promesses pour résoudre la promesse
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                    throw error; // rejeter la promesse en cas d'erreur
-                });
-        }
-
-        /*Vérification si l'utilisateur est login en vérifiant
-        si un token est bien enregistré localement*/
-        isAuthenticated() {
-            const authenticationCookie = Cookie.get('Authentication');
-            return !!authenticationCookie; // Convertir la valeur en booléen
-        }
-
-        /*Méthode pour se déconnecter*/
-        logout() {
-            if (this.isAuthenticated()) {
-                Cookie.remove('Authentication');
                 return true;
-            }
-            else{
+            }catch(e){
                 return false;
             }
         }
+
+    /*Vérification si l'utilisateur est login en vérifiant
+si un token est bien enregistré localement*/
+    /*
+    isAuthenticated() {
+        const authenticationCookie = Cookie.get('Authentication');
+        return !!authenticationCookie; // Convertir la valeur en booléen
+    }
+
+     */
+
+    /*Méthode pour se déconnecter*/
+    /*
+    logout() {
+        if (this.isAuthenticated()) {
+            Cookie.remove('Authentication');
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+     */
+
+    // Ajoutez cette méthode dans la classe AuthManager
+    getUserId() {
+        return localStorage.getItem('username');
+    }
 
     }
         /*Instance de ma classe à exporter pour l'utiliser partout*/

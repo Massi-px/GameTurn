@@ -1,21 +1,15 @@
 import bcrypt from 'bcryptjs';
 import getConnection  from '../database.js';
 
+const conn = await getConnection();
+
 export async function checkUsernameExists(username) {
-    const conn = await getConnection();
-    const result = await conn.query(`SELECT * FROM users WHERE username = '${username}'`);
+
+    const result = await conn.query(`SELECT username FROM users WHERE username = '${username}'`);
     return result.length > 0;
 }
 
 export async function createUser(username, lastname, firstname, email, password) {
-    const conn = await getConnection();
-
-    // Vérifier si l'utilisateur existe déjà dans la base de données
-    const usernameExists = await checkUsernameExists(username);
-
-    if (usernameExists) {
-        throw new Error('Nom d\'utilisateur déjà utilisé');
-    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 

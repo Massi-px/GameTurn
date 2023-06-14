@@ -16,45 +16,58 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import apiInstance from "../utils/api/apiService";
 
 const gameOptions = ['FPS', 'Stratégie', 'Combat', 'Autre'];
 
 export default function CreateTournament() {
     const [name, setName] = useState('');
     const [selectedGame, setSelectedGame] = useState('');
-    const [nmbrParticipants, setNmbrParticipants] = useState('');
+    const [maxNmbrParticipants, setMaxNmbrParticipants] = useState('');
     const [startDateTournament, setStartDateTournament] = useState(dayjs(new Date()));
     const [endDateTournament, setEndDateTournament] = useState(dayjs(new Date()));
+    const [formErrors, setFormErrors] = useState({
+        name: false,
+        selectedGame: false,
+        nmbrParticipants: false,
+        startDate: false,
+        endDate: false,
+    });
+    const startDateString = startDateTournament.toISOString().split('T')[0];
+    const endDateString = endDateTournament.toISOString().split('T')[0];
 
     const handleGameChange = (event) => {
         setSelectedGame(event.target.value);
     };
 
     const handleCreateTournament = async () => {
-        try {
-            const response = await fetch('http://localhost:8080/api/create-tournament', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // Assurez-vous d'inclure le cookie contenant le token JWT dans l'en-tête
-                },
-                credentials:'include',
-                body: JSON.stringify({
-                    name,
-                    start_date: startDateTournament.format('YYYY-MM-DD'),
-                    end_date: endDateTournament.format('YYYY-MM-DD'),
-                    nmbrParticipants,
-                    game: selectedGame
-                }),
-            });
+        const errors = {
+            name: !name,
+            selectedGame: !selectedGame,
+            maxNmbrParticipants: !maxNmbrParticipants,
+            startDate: !startDateTournament,
+            endDate: !endDateTournament,
+        };
 
-            const data = await response.json(); // Attendre la résolution de response.json() et obtenir les données
+        setFormErrors(errors);
 
-            console.log(data);
-            console.log('Tournoi créé avec succès !');
-        } catch (error) {
-            console.log('Erreur lors de la requête de création du tournoi :', error);
+        if (Object.values(errors).some((error) => error)) {
+            return;
         }
+
+
+        //console.log('Tournoi créé avec succès !');
+
+            await apiInstance.exec(
+                'tournaments',
+                'POST',
+                {
+                    name,
+                    start_date: startDateString,
+                    end_date: endDateString,
+                    maxNmbrParticipants,
+                    game: selectedGame
+                })
     }
 
     return (
@@ -87,6 +100,8 @@ export default function CreateTournament() {
                     }}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    error={formErrors.name}
+                    helperText={formErrors.name && 'Veuillez entrer le nom du tournoi.'}
                 />
 
                 <FormControl fullWidth margin="normal" required>
@@ -97,6 +112,7 @@ export default function CreateTournament() {
                         label="Type de jeu"
                         onChange={handleGameChange}
                         inputProps={{ style: { color: '#FFF' } }}
+                        error={formErrors.selectedGame}
                     >
                         {gameOptions.map((option) => (
                             <MenuItem key={option} value={option} sx={{ color: '#000' }}>
@@ -129,12 +145,14 @@ export default function CreateTournament() {
                     label="Nombre de participants"
                     name="nmbrParticipants"
                     autoComplete="nmbrParticipants"
-                    sx={{color:'#FFF'}}
+                    sx={{ color: '#FFF' }}
                     InputLabelProps={{
                         style: { color: '#FFF' },
                     }}
-                    value={nmbrParticipants}
-                    onChange={(e) => setNmbrParticipants(e.target.value)}
+                    value={maxNmbrParticipants}
+                    onChange={(e) => setMaxNmbrParticipants(e.target.value)}
+                    error={formErrors.nmbrParticipants}
+                    helperText={formErrors.nmbrParticipants && 'Veuillez entrer le nombre de participants.'}
                 />
 
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -150,14 +168,17 @@ export default function CreateTournament() {
                                     required
                                     InputProps={{
                                         ...inputProps,
-                                        style: {paddingRight: 0 },
+                                        style: { paddingRight: 0, },
                                     }}
+                                    error={formErrors.startDate}
                                 />
                             )}
                         />
 
                         <DatePicker
                             label="Fin du tournoi"
+                            value={endDateTournament}
+                            onChange={(newValue) => setEndDateTournament(newValue)}
                             renderInput={({ inputProps }) => (
                                 <TextField
                                     fullWidth
@@ -165,10 +186,9 @@ export default function CreateTournament() {
                                     required
                                     InputProps={{
                                         ...inputProps,
-                                        style: {paddingRight: 0 },
+                                        style: { paddingRight: 0 },
                                     }}
-                                    value={endDateTournament}
-                                    onChange={(newValue) => setEndDateTournament(newValue)}
+                                    error={formErrors.endDate}
                                 />
                             )}
                         />
@@ -189,5 +209,5 @@ export default function CreateTournament() {
                 </Grid>
             </Container>
         </Box>
-    )
+    );
 }
