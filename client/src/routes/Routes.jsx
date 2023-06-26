@@ -22,6 +22,8 @@ import ListTournament from "../pages/ListTournament";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import Tournament from "../pages/Tournament";
 import apiInstance from "../utils/api/apiService";
+import StatusTournament from "../pages/StatusTournament";
+import Lobby from "../pages/Lobby";
 
 
 const drawerWidth = 240;
@@ -53,8 +55,8 @@ const HomeRoutes = () => {
                     '& .MuiDrawer-paper': {
                         width: drawerWidth,
                         boxSizing: 'border-box',
-                        bgcolor: '#1A1C21',
-                        color: '#FFF'
+                        bgcolor: '#403D39',
+                        color: '#FFF',
                     },
                 }}
                 variant="permanent"
@@ -98,6 +100,7 @@ const HomeRoutes = () => {
                 <Route path="/create-tournament" element={<CreateTournament />} />
                 <Route path="/list-tournament" element={<ListTournament />} />
                 <Route path="tournament/:tournamentId" element={<Tournament />} />
+                <Route path="tournament/status" element={<StatusTournament/>} />
             </Routes>
         </>
     );
@@ -108,25 +111,13 @@ const AppRouter = () => {
     return(
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Login />} />
+                <Route path="/" element={<Lobby />} />
+                <Route path="/sign-in" element={<Login />} />
                 <Route path="/sign-up" element={<SignUp />} />
                 <Route path="/home/*" element={<HomeRoutes />} />
             </Routes>
         </BrowserRouter>
         )
 };
-/*
-const AppRouter = () => {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/sign-up" element={<SignUp />} />
-                <Route path="/home/*" element={<HomeRoutes />} />
-            </Routes>
-        </BrowserRouter>
-    );
-};
-*/
 
 export default AppRouter;

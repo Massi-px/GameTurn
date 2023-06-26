@@ -13,7 +13,7 @@ export default function Home() {
             <CssBaseline />
             <Box
                 component="main"
-                sx={{ flexGrow: 1, bgcolor: '#1A1C21', p: 3}}
+                sx={{ flexGrow: 1, bgcolor: '#252422', p: 3}}
             >
                 <Toolbar />
                 <Typography paragraph>

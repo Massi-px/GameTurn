@@ -58,7 +58,7 @@ export default function Login({ setIsAuthenticated }) {
                         backgroundPosition: 'center',
                     }}
                 />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{bgcolor: '#050517', color:'#FFFF'}}>
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square sx={{bgcolor: '#252422', color:'#FFFF'}}>
                     <Box
                         sx={{
                             my: 8,
@@ -67,11 +67,11 @@ export default function Login({ setIsAuthenticated }) {
                             flexDirection: 'column',
                             alignItems: 'center',
                             padding: '10px',
-                                bgcolor: '#BEB7A4',
+                                bgcolor: '#403D39',
                             borderRadius:'15px',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: '#CF5C36' }}>
+                        <Avatar sx={{ m: 1, bgcolor: '#ED4545' }}>
 
                         </Avatar>
                         <Typography component="h1" variant="h5">
@@ -110,13 +110,13 @@ export default function Login({ setIsAuthenticated }) {
                             <Button
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2, bgcolor: '#CF5C36' }}
+                                sx={{ mt: 3, mb: 2 }}
                                 onClick={handleClick}
                             >
                                 Sign In
                             </Button>
                             <Grid container>
-                                <Grid item xs sx={{color: '#CF5C36'}}>
+                                <Grid item xs >
                                     <Link href="#" variant="body2" >
                                         Forgot password?
                                     </Link>

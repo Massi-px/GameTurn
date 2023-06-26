@@ -75,7 +75,7 @@ export default function SignUp() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Grid container component="main" sx={{bgcolor: '#050517', height: '100vh', color:'#FFFF'}}>
+            <Grid container component="main" sx={{bgcolor: '#252422', height: '100vh', color:'#FFFF'}}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
                     <Box
@@ -85,12 +85,12 @@ export default function SignUp() {
                             flexDirection: 'column',
                             alignItems: 'center',
                             padding: '10px',
-                            bgcolor: '#7E858B',
+                            bgcolor: '#403D39',
                             borderRadius:'15px',
                             width: '100%',
                         }}
                     >
-                        <Avatar sx={{ m: 1, bgcolor: '#CF5C36' }}>
+                        <Avatar sx={{ m: 1, bgcolor: '#ED4545'  }}>
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">

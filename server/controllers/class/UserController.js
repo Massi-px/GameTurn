@@ -39,9 +39,7 @@ export default class UserController extends AbstractController{
             if(verifPassword) {
                 const token = jwt.sign({id: user.id}, SECRET_KEY, {expiresIn: EXPIRATION_TIME}); // Génération du token en utilisant l'ID de l'utilisateur
                 //console.log(req.cookies)
-                user.token = token
-                user.isActive = true
-                await this.model.update(user)
+                await this.model.update(user.id, {token, isActive: true})
                 res.cookie('Authentication', token, {
                     maxAge: remember ? 3600 * 24 * 365 + Date.now() : null,
                     //SameSite: 'none',

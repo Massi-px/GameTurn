@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'TT_Octosquare', sans-serif; /* Remplacez par le nom souhaité pour votre police */
+    src: url('../police/ttOctosquares/TT_Octosquares_Trial_Regular.ttf') format('truetype'); /* Remplacez le chemin du fichier par votre fichier de police */
+    font-weight: normal;
+    font-style: normal;
+}
+
+.page{
+    font-family: 'TT_Octosquare', sans-serif;
+}

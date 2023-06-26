@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {Box, Button, Typography} from '@mui/material';
 import authManagerInstance from "../utils/api/auth";
 import apiInstance from "../utils/api/apiService";
@@ -18,10 +18,12 @@ export default function Tournament() {
     }, []);
 
     const handleClick = async () => {
-         await apiInstance.exec(
-            'tournaments/join',
-            'POST',
-            {tournamentId})
+        await apiInstance.exec(
+            `tournaments/${tournamentId}/join`,
+            'POST')
+    }
+
+    const details = () => {
     }
 
     return (
@@ -65,6 +67,15 @@ export default function Tournament() {
                     <Typography> Username = {userId}</Typography>
 
                     <Button onClick = {handleClick}> Join Tournament </Button>
+
+                    <Link
+                        to={{
+                            pathname: `/home/tournament/status`,
+                        }}
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <Button>Details</Button>
+                    </Link>
 
                 </Box>
             )}

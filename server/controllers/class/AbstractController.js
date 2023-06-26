@@ -39,7 +39,7 @@ export default class AbstractController {
     }
 
     async put(req,res){
-        let data = await  this.model.update(this._formatReq(req.body))
+        let data = await  this.model.update(req.params.id, this._formatReq(req.body))
         if(data){
             res.json(this._formatRes(data));
             return;
@@ -56,6 +56,16 @@ export default class AbstractController {
         }
         res.status(404).json();
 
+    }
+
+    async getBy(req, res){
+        let data = await this.model.getBy(req.params)
+        if(data){
+            res.json(data.map(this._formatRes));
+            return;
+        }
+
+        res.status(404).json();
     }
 
 }

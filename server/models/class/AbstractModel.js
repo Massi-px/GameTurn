@@ -25,15 +25,16 @@ export default class AbstractModel {
         );
     }
 
-    async update(object) {
+    async update(id, object) {
         const conn = await this.getConn();
         const columns = Object.keys(object);
         const values = Object.values(object);
         const updateQuery = columns.map(column => `${column} = ?`).join(', ');
-        return await conn.query(
+        await conn.query(
             `UPDATE ${this.tableName} SET ${updateQuery} WHERE id = ?`,
-            [...values, object.id]
+            [...values, id]
         );
+        return await this.get(id);
     }
 
     async insert(obj) {
@@ -60,7 +61,7 @@ export default class AbstractModel {
         const conn = await this.getConn();
         const column = Object.keys(object)[0];
         return (await conn.query(
-            `SELECT * FROM users WHERE ${column} = ?`,
+            `SELECT * FROM ${this.tableName} WHERE ${column} = ?`,
             [object[column]]
         ));
     }
