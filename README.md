@@ -63,7 +63,7 @@ Suivez ces étapes pour installer GameTurn localement :
    npm run dev
    ```
 
-   Cela lancera à la fois le serveur et le client, permettant d'accéder à l'application dans votre navigateur à l'adresse : `http://localhost:3000`.
+   Cela lancera à la fois le serveur et le client, permettant d'accéder à l'application dans votre navigateur à l'adresse : `http://localhost:5173`.
 
    Assurez-vous que le serveur de base de données MariaDB est en cours d'exécution avant de lancer l'application.
 
