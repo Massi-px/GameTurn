@@ -59,7 +59,7 @@ Suivez ces étapes pour installer GameTurn localement :
    npm install
    ```
 
-6. Configurez une base de données MariaDB et exécutez le script SQL fourni dans le fichier `database.sql` pour créer la base de données et les tables nécessaires.
+6. Configurez une base de données MariaDB et exécutez le script SQL fourni dans le fichier `script.sql` pour créer la base de données et les tables nécessaires.
 
    Assurez-vous de créer une base de données nommée `gameturn` et d'exécuter le script SQL complet.
 
