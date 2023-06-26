@@ -66,7 +66,7 @@ Suivez ces étapes pour installer GameTurn localement :
 7. Une fois toutes les étapes ci-dessus terminées avec succès, vous pouvez lancer l'application GameTurn en exécutant la commande suivante :
 
    ```
-   npm run start
+   npm run dev
    ```
 
    Cela lancera à la fois le serveur et le client, permettant d'accéder à l'application dans votre navigateur à l'adresse : `http://localhost:3000`.
