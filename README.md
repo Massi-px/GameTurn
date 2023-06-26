@@ -34,36 +34,30 @@ Suivez ces étapes pour installer GameTurn localement :
    git clone https://github.com/Massi-px/GameTurn.git
    ```
 
-2. Accédez au répertoire du projet :
-
-   ```
-   cd GameTurn
-   ```
-
-3. Installez les dépendances du client :
+2. Installez les dépendances du client :
 
    ```
    cd client
    npm install
    ```
 
-4. Revenez au répertoire principal :
+3. Revenez au répertoire principal :
 
    ```
    cd ../server
    ```
 
-5. Installez les dépendances du serveur :
+4. Installez les dépendances du serveur :
 
    ```
    npm install
    ```
 
-6. Configurez une base de données MariaDB et exécutez le script SQL fourni dans le fichier `script.sql` pour créer la base de données et les tables nécessaires.
+5. Configurez une base de données MariaDB et exécutez le script SQL fourni dans le fichier `script.sql` pour créer la base de données et les tables nécessaires.
 
    Assurez-vous de créer une base de données nommée `gameturn` et d'exécuter le script SQL complet.
 
-7. Une fois toutes les étapes ci-dessus terminées avec succès, vous pouvez lancer l'application GameTurn en exécutant la commande suivante :
+6. Une fois toutes les étapes ci-dessus terminées avec succès, vous pouvez lancer l'application GameTurn en exécutant la commande suivante :
 
    ```
    npm run dev
